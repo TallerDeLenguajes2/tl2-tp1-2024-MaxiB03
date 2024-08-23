@@ -1,0 +1,14 @@
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\bin\Debug\net8.0\tl2-tp1-2024-MaxiB03.exe
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\bin\Debug\net8.0\tl2-tp1-2024-MaxiB03.deps.json
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\bin\Debug\net8.0\tl2-tp1-2024-MaxiB03.runtimeconfig.json
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\bin\Debug\net8.0\tl2-tp1-2024-MaxiB03.dll
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\bin\Debug\net8.0\tl2-tp1-2024-MaxiB03.pdb
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\obj\Debug\net8.0\tl2-tp1-2024-MaxiB03.GeneratedMSBuildEditorConfig.editorconfig
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\obj\Debug\net8.0\tl2-tp1-2024-MaxiB03.AssemblyInfoInputs.cache
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\obj\Debug\net8.0\tl2-tp1-2024-MaxiB03.AssemblyInfo.cs
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\obj\Debug\net8.0\tl2-tp1-2024-MaxiB03.csproj.CoreCompileInputs.cache
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\obj\Debug\net8.0\tl2-tp1-2024-MaxiB03.dll
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\obj\Debug\net8.0\refint\tl2-tp1-2024-MaxiB03.dll
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\obj\Debug\net8.0\tl2-tp1-2024-MaxiB03.pdb
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\obj\Debug\net8.0\tl2-tp1-2024-MaxiB03.genruntimeconfig.cache
+C:\RepoTaller2\tp1\tl2-tp1-2024-MaxiB03\obj\Debug\net8.0\ref\tl2-tp1-2024-MaxiB03.dll
