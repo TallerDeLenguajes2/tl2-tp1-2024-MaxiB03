@@ -156,7 +156,7 @@ void ReasignarPedido(Cadeteria cadeteria)
 
     while (!int.TryParse(Console.ReadLine(), out nroPedido))
     {
-        Console.WriteLine("No ingreso un numero. Inténtelo de nuevo.");
+        Console.WriteLine("No Ingreso un numero. Inténtelo de nuevo.");
     }
 
     Pedidos pedido = BuscarPedidoEnCadetes(cadeteria.ListaCadetes, nroPedido);
