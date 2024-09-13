@@ -1,7 +1,13 @@
-public static class CsvHelper
+using System.Text.Json;
+public abstract class AccesoADatos
 {
-    // Método para cargar la información de la cadetería desde un archivo CSV
-    public static Cadeteria CargarCadeteriaDesdeCSV(string rutaArchivo)
+    public abstract Cadeteria LeerArchivoCadeteria(string rutaArchivo);
+    public abstract List<Cadete> LeerArchivoCadetes(string rutaArchivo);
+}
+
+public class AccesoCSV : AccesoADatos
+{
+    public override Cadeteria LeerArchivoCadeteria(string rutaArchivo)
     {
         using (StreamReader lector = new StreamReader(rutaArchivo))
         {
@@ -19,8 +25,7 @@ public static class CsvHelper
         return null;
     }
 
-    // Método para cargar los cadetes desde un archivo CSV
-    public static List<Cadete> CargarCadetesDesdeCSV(string rutaArchivo)
+    public override List<Cadete> LeerArchivoCadetes(string rutaArchivo)
     {
         List<Cadete> listaCadetes = new List<Cadete>();
 
@@ -37,9 +42,24 @@ public static class CsvHelper
                 string telefono = datos[3].Trim();
 
                 Cadete cadete = new Cadete(id, nombre, direccion, telefono);
-                listaCadetes.Add(cadete);  // Agregar cadete a la lista
+                listaCadetes.Add(cadete);
             }
         }
         return listaCadetes;
+    }
+}
+
+public class AccesoJSON : AccesoADatos
+{
+    public override Cadeteria LeerArchivoCadeteria(string rutaArchivo)
+    {
+        string jsonData = File.ReadAllText(rutaArchivo);
+        return JsonSerializer.Deserialize<Cadeteria>(jsonData);
+    }
+
+    public override List<Cadete> LeerArchivoCadetes(string rutaArchivo)
+    {
+        string jsonData = File.ReadAllText(rutaArchivo);
+        return JsonSerializer.Deserialize<List<Cadete>>(jsonData);
     }
 }

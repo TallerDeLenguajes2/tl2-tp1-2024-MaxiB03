@@ -1,8 +1,34 @@
-﻿string rutaCadeteria = "C:/RepoTaller2/tp1/tl2-tp1-2024-MaxiB03/DatosCadeteria.csv";
-string rutaCadetes = "C:/RepoTaller2/tp1/tl2-tp1-2024-MaxiB03/DatosCadetes.csv";
+﻿Console.WriteLine("Seleccione el tipo de acceso a los datos:");
+Console.WriteLine("1. CSV");
+Console.WriteLine("2. JSON");
+int respuesta;
 
-Cadeteria cadeteria = CsvHelper.CargarCadeteriaDesdeCSV(rutaCadeteria);
-List<Cadete> listaCadetes = CsvHelper.CargarCadetesDesdeCSV(rutaCadetes);
+while (!int.TryParse(Console.ReadLine(), out respuesta) || (respuesta != 1 && respuesta != 2))
+{
+    Console.WriteLine("Opción no válida. Inténtelo de nuevo.");
+}
+
+AccesoADatos accesoADatos;
+string rutaCadeteria;
+string rutaCadetes;
+
+if (respuesta == 1)
+{
+    accesoADatos = new AccesoCSV();
+    rutaCadeteria = "C:/RepoTaller2/tp1/tl2-tp1-2024-MaxiB03/DatosCadeteria.csv";
+    rutaCadetes = "C:/RepoTaller2/tp1/tl2-tp1-2024-MaxiB03/DatosCadetes.csv";
+    Console.WriteLine("Acceso a CSV seleccionado.");
+}
+else
+{
+    accesoADatos = new AccesoJSON();
+    rutaCadeteria = "C:/RepoTaller2/tp1/tl2-tp1-2024-MaxiB03/DatosCadeteria.json";
+    rutaCadetes = "C:/RepoTaller2/tp1/tl2-tp1-2024-MaxiB03/DatosCadetes.json";
+    Console.WriteLine("Acceso a JSON seleccionado.");
+}
+
+Cadeteria cadeteria = accesoADatos.LeerArchivoCadeteria(rutaCadeteria); 
+List<Cadete> listaCadetes = accesoADatos.LeerArchivoCadetes(rutaCadetes); 
 
 // Asigno la lista de cadetes cargada a la cadetería
 if (cadeteria != null)
@@ -17,7 +43,7 @@ if (cadeteria != null && cadeteria.ListaCadetes.Count > 0)
 }
 else
 {
-    Console.WriteLine("Error al cargar los datos desde los archivos CSV.");
+    Console.WriteLine("Error al cargar los datos desde los archivos.");
     return;
 }
 

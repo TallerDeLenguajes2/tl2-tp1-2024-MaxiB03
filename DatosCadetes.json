@@ -1,0 +1,20 @@
+[
+    {
+      "Id": 1,
+      "Nombre": "Luis Rodriguez",
+      "Direccion": "25 de Mayo 123",
+      "Telefono": "3815777777"
+    },
+    {
+      "Id": 2,
+      "Nombre": "Guillermo Acosta",
+      "Direccion": "Laprida 321",
+      "Telefono": "3815888888"
+    },
+    {
+      "Id": 3,
+      "Nombre": "Mateo Coronel",
+      "Direccion": "Bolivia 456",
+      "Telefono": "3815373737"
+    }
+  ]
