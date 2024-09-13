@@ -167,7 +167,7 @@ void ReasignarPedido(Cadeteria cadeteria)
         Console.WriteLine($"Cadete que posee el pedido \nId:{cadeteActual.Id}, Nombre: {cadeteActual.Nombre}");
 
         int idNuevoCadete;
-        Console.WriteLine("Ingrese Id del nuevo cadete");
+        Console.WriteLine("Ingrese ID del nuevo cadete");
 
         while (!int.TryParse(Console.ReadLine(), out idNuevoCadete) || idNuevoCadete==cadeteActual.Id || idNuevoCadete < 0 || idNuevoCadete > 2)
         {
