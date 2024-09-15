@@ -6,8 +6,9 @@ public static class Informe
         var informeCadetes = cadeteria.ListaCadetes.Select(cadete => new
         {
             Nombre = cadete.Nombre,
-            CantidadPedidos = cadete.ListaPedidos.Count,
-            MontoGanado = cadete.JornalACobrar()
+            CantidadPedidos = cadeteria.ListaPedidos.Count(pedido => pedido.IdCadete == cadete.Id),
+            PedidosEntregados = cadeteria.ListaPedidos.Count(pedido => pedido.IdCadete == cadete.Id && pedido.Estado == Estado.Entregado),
+            MontoGanado = cadeteria.JornalACobrar(cadete.Id)
         }).ToList(); // Con ToList() guardo cada objeto creado en una nueva lista (informeCadetes)
 
         // Mostrar el informe por cada cadete
@@ -15,7 +16,8 @@ public static class Informe
         foreach (var cadeteInfo in informeCadetes)
         {
             Console.WriteLine($"Cadete: {cadeteInfo.Nombre}");
-            Console.WriteLine($"Cantidad de pedidos: {cadeteInfo.CantidadPedidos}");
+            Console.WriteLine($"Total de pedidos: {cadeteInfo.CantidadPedidos}");
+            Console.WriteLine($"Entregados: {cadeteInfo.PedidosEntregados}");
             Console.WriteLine($"Monto ganado: ${cadeteInfo.MontoGanado}");
             Console.WriteLine("-------------------------");
         }

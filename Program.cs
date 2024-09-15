@@ -1,4 +1,6 @@
-﻿Console.WriteLine("Seleccione el tipo de acceso a los datos:");
+﻿using System.Reflection.Metadata;
+
+Console.WriteLine("Seleccione el tipo de acceso a los datos:");
 Console.WriteLine("1. CSV");
 Console.WriteLine("2. JSON");
 int respuesta;
@@ -54,21 +56,21 @@ while (continuar)
     Console.WriteLine("\nGestión de Pedidos:");
     Console.WriteLine("1. Dar de alta pedido");
     Console.WriteLine("2. Cambiar estado de un pedido");
-    Console.WriteLine("3. Reasignar pedido a otro cadete");
+    Console.WriteLine("3. Asignar Cadete a Pedido");
     Console.WriteLine("4. Salir");
     Console.Write("Seleccione una opción: ");
             
-    string opcion = Console.ReadLine();
+    string? opcion = Console.ReadLine();
     switch (opcion)
     {
         case "1":
             DarDeAltaPedido(cadeteria);
             break;
         case "2":
-            CambiarEstadoPedido(cadeteria);
+            CambiarEstado(cadeteria);
             break;
         case "3":
-            ReasignarPedido(cadeteria);
+            AsignarCadete(cadeteria);
             break;
         case "4":
             continuar = false;
@@ -106,152 +108,72 @@ void DarDeAltaPedido(Cadeteria cadeteria)
     Console.WriteLine("Ingrese datos de referencia del cliente:");
     string? datosDeReferencia = Console.ReadLine();
 
-    Pedidos nuevoPedido = new Pedidos(nroPedido, observacion, nombreCliente, direccionCliente, telefonoCliente, datosDeReferencia, Estado.Pendiente);
-
-    int idCadete;
-    Cadete cadeteAsignado;
-    do
-    {
-        Console.WriteLine("Ingrese el ID del cadete para asignar el pedido:");
-
-        while (!int.TryParse(Console.ReadLine(), out idCadete))
-        {
-            Console.WriteLine("No ingreso un numero. Inténtelo de nuevo.");
-        }
-        
-        cadeteAsignado = BuscarCadetePorID(cadeteria.ListaCadetes, idCadete);
-
-        if(cadeteAsignado==null)
-        {
-            Console.WriteLine("No se encontro cadete con ese ID");
-        }
-
-    } while (cadeteAsignado==null);
-
-    cadeteria.AsignarPedidoACadete(cadeteAsignado, nuevoPedido);
-    Console.WriteLine("Pedido asignado al cadete exitosamente.");
+    cadeteria.AgregarPedido(nroPedido, observacion, nombreCliente, direccionCliente, telefonoCliente, datosDeReferencia, Estado.Pendiente);
+    Console.WriteLine("Pedido tomado exitosamente.");
 }
 
-void CambiarEstadoPedido(Cadeteria cadeteria)
+void CambiarEstado(Cadeteria cadeteria)
 {
     int nroPedido;
-    Console.WriteLine("Ingrese el número del pedido a modificar: ");
+    Console.WriteLine("Ingrese numero del pedido a modificar: ");
 
     while (!int.TryParse(Console.ReadLine(), out nroPedido))
     {
         Console.WriteLine("No ingreso un numero. Inténtelo de nuevo.");
     }
 
-    Pedidos pedido = BuscarPedidoEnCadetes(cadeteria.ListaCadetes, nroPedido);
+    bool encontrado = BuscarNroPedido(cadeteria.ListaPedidos, nroPedido);
 
-    if(pedido!=null)
+    if(encontrado!=false)
     {
-        int nuevoEstado;
-        Console.WriteLine("Ingrese el nuevo estado (0: Pendiente, 1: Entregado, 2: Cancelado):");
-
-        while (!int.TryParse(Console.ReadLine(), out nuevoEstado) || nuevoEstado < 0 || nuevoEstado > 2)
-        {
-            Console.WriteLine("Opción no válida. Inténtelo de nuevo.");
-        }
-
-        switch (nuevoEstado)
-        {
-            case 0:
-                pedido.Estado = Estado.Pendiente;
-            break;
-            case 1:
-                pedido.Estado = Estado.Entregado;
-            break;
-            case 2:
-                pedido.Estado = Estado.Cancelado;
-            break;
-        }
-
+        cadeteria.CambiarEstadoPedido(nroPedido);
         Console.WriteLine("Estado actualizado con éxito.");
     }
     else
     {
-        Console.WriteLine("Pedido no encontrado.");
+        Console.WriteLine("Pedido No encontrado");
     }
 }
 
-void ReasignarPedido(Cadeteria cadeteria)
+void AsignarCadete(Cadeteria cadeteria)
 {
     int nroPedido;
-    Console.WriteLine("Ingrese numero del pedido a reasignar:");
+    Console.WriteLine("Ingrese numero del pedido: ");
 
     while (!int.TryParse(Console.ReadLine(), out nroPedido))
     {
-        Console.WriteLine("No Ingreso un numero. Inténtelo de nuevo.");
+        Console.WriteLine("No ingreso un numero. Inténtelo de nuevo.");
     }
 
-    Pedidos pedido = BuscarPedidoEnCadetes(cadeteria.ListaCadetes, nroPedido);
+    bool encontrado = BuscarNroPedido(cadeteria.ListaPedidos, nroPedido);
 
-    if(pedido!=null)
+    if(encontrado!=false)
     {
-        Cadete cadeteActual = BuscarCadeteActual(cadeteria.ListaCadetes, nroPedido);
-        Console.WriteLine($"Cadete que posee el pedido \nId:{cadeteActual.Id}, Nombre: {cadeteActual.Nombre}");
+        int idCadete;
+        Console.WriteLine("Ingrese Id del cadete que desea asignar");
 
-        int idNuevoCadete;
-        Console.WriteLine("Ingrese ID del nuevo cadete");
-
-        while (!int.TryParse(Console.ReadLine(), out idNuevoCadete) || idNuevoCadete==cadeteActual.Id || idNuevoCadete < 0 || idNuevoCadete > 2)
+        while (!int.TryParse(Console.ReadLine(), out idCadete) || idCadete<1 || idCadete>3)
         {
             Console.WriteLine("Opción no válida. Inténtelo de nuevo.");
         }
 
-        Cadete cadeteNuevo = BuscarCadetePorID(cadeteria.ListaCadetes, idNuevoCadete);
-
-        cadeteria.ReasignarPedido(cadeteActual, cadeteNuevo, pedido);
-        Console.WriteLine("Pedido Reasignado exitosamente");
+        cadeteria.AsignarCadeteAPedido(idCadete, nroPedido);
+        Console.WriteLine("Cadete asignado exitosamente");
     }
     else
     {
-        Console.WriteLine("Pedido no encontrado.");
+        Console.WriteLine("Pedido No encontrado");
     }
 }
 
-Cadete BuscarCadeteActual(List<Cadete> cadetes, int nroBuscado)
+bool BuscarNroPedido(List<Pedidos> pedidos, int nroBuscado)
 {
-    foreach (var cadete in cadetes)
+    foreach (var pedido in pedidos)
     {
-        foreach (var pedido in cadete.ListaPedidos)
+        if(pedido.NroPedido==nroBuscado)
         {
-            if(pedido.NroPedido==nroBuscado)
-            {
-                return cadete;
-            }
+            return true;
         }
     }
-    return null;
-}
-
-Pedidos BuscarPedidoEnCadetes(List<Cadete> cadetes, int nroBuscado)
-{
-    foreach (var cadete in cadetes)
-    {
-        foreach (var pedido in cadete.ListaPedidos)
-        {
-            if(pedido.NroPedido==nroBuscado)
-            {
-                return pedido;
-            }
-        }
-    }
-    return null;
-}
-
-Cadete BuscarCadetePorID(List<Cadete> cadetes, int id)
-{
-    Cadete encontrado;
-
-    foreach (var cadete in cadetes)
-    {
-        if(cadete.Id==id)
-        {
-            encontrado = cadete;
-            return encontrado;
-        }
-    }
-    return null;
+    return false;
 }
