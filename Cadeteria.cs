@@ -25,14 +25,19 @@ public class Cadeteria
         Pedidos nuevoPedido = new Pedidos(nroPedido, observacion, nombreCli, direccion, telefono, datosDeReferencia, estado);
         ListaPedidos.Add(nuevoPedido);
     }
-    public void AgregarCadete (Cadete cadete)
+    public void AgregarCadete (int idCadete, string nombre, string direccion, string telefono)
     {
-        ListaCadetes.Add(cadete);
+        Cadete nuevoCadete = new Cadete(idCadete, nombre, direccion, telefono);
+        ListaCadetes.Add(nuevoCadete);
     }
 
-     public void EliminarCadete(Cadete cadete)
+     public void EliminarCadete(int idCadete)
     {
-        ListaCadetes.Remove(cadete);
+        Cadete? cadete = ListaCadetes.FirstOrDefault(c => c.Id == idCadete);
+        if (cadete != null)
+        {
+            ListaCadetes.Remove(cadete);
+        }
     }
 
     public int JornalACobrar(int idCadete)
@@ -49,17 +54,10 @@ public class Cadeteria
         return cantPedidos*500;
     }
 
-    public void CambiarEstadoPedido(int nroPedido)
+    public void CambiarEstadoPedido(int nroPedido, int nuevoEstado)
     {
-        int nuevoEstado;
-        Console.WriteLine("Ingrese el nuevo estado (0: Pendiente, 1: Entregado, 2: Cancelado):");
-
-        while (!int.TryParse(Console.ReadLine(), out nuevoEstado) || nuevoEstado < 0 || nuevoEstado > 2)
-        {
-            Console.WriteLine("Opción no válida. Inténtelo de nuevo.");
-        }
-
         Pedidos? pedidoEncontrado=null;
+
         foreach (var pedido in listaPedidos)
         {
             if(pedido.NroPedido==nroPedido)

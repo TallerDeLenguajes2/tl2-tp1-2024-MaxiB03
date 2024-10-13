@@ -122,11 +122,19 @@ void CambiarEstado(Cadeteria cadeteria)
         Console.WriteLine("No ingreso un numero. Inténtelo de nuevo.");
     }
 
+    int nuevoEstado;
+    Console.WriteLine("Ingrese el nuevo estado (0: Pendiente, 1: Entregado, 2: Cancelado):");
+
+    while (!int.TryParse(Console.ReadLine(), out nuevoEstado) || nuevoEstado < 0 || nuevoEstado > 2)
+    {
+        Console.WriteLine("Opción no válida. Inténtelo de nuevo.");
+    }
+
     bool encontrado = BuscarNroPedido(cadeteria.ListaPedidos, nroPedido);
 
     if(encontrado!=false)
     {
-        cadeteria.CambiarEstadoPedido(nroPedido);
+        cadeteria.CambiarEstadoPedido(nroPedido, nuevoEstado);
         Console.WriteLine("Estado actualizado con éxito.");
     }
     else
